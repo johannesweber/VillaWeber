@@ -33,11 +33,13 @@ def get_path(folder_name: str = None):
     if folder_name:
         for r, d, f in os.walk(root_path):
             for folder in d:
-                if folder == folder_name:
-                    found_path = r
-                    break
-        if found_path:
-            result = found_path + '\\' + folder_name + '\\'
+                if '.' not in folder:
+                    if folder == folder_name:
+                        found_path = r
+                        break
+            if found_path:
+                result = found_path + '\\' + folder_name + '\\'
+                break
     else:
         result = root_path
     return result

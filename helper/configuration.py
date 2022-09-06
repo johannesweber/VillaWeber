@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import configparser
-
 from helper import util
 
 
@@ -23,6 +22,7 @@ class Configuration:
         self.fritzbox_pw = self.get_value('fritzbox', 'pw')
         self.fritzbox_ip = self.get_value('fritzbox', 'ip')
         self.residents = self.get_list('fritzbox', 'residents')
+        self.ga_excel_path = self.get_value('knx', 'ga_excel_path')
 
     def get_boolean_value(self, group, attribute):
         return util.string_2_bool(self.get_value(group, attribute))
