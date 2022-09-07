@@ -1,4 +1,3 @@
-from msilib.schema import tables
 from helper.configuration import Configuration
 from openpyxl import load_workbook
 import pandas as pd
@@ -11,26 +10,23 @@ class ExcelHelper:
         self.configuration.load()
         self.path = self.configuration.ga_excel_path
 
-    def read_excel(self, sheetName, table = None) -> pd.DataFrame:
+    def read_excel(self, sheet_name, table = None) -> list[pd.DataFrame]:
         wb = load_workbook(self.path)
-        sheet = wb[sheetName]
+        sheet = wb[sheet_name]
         tables = []
 
         for entry, data_boundary in sheet.tables.items():
-            #parse the data within the ref boundary
-
             data = sheet[data_boundary]
-            #extract the data 
-            #the inner list comprehension gets the values for each cell in the table
-            content = [[cell.value for cell in ent] 
-                        for ent in data
-                      ]
+            content = [[cell.value for cell in ent]  for ent in data]
             
             header = content[0]
             rest = content[1:]
 
             df = pd.DataFrame(rest, columns = header)
-            tables.append(df)
-            if table is not None and table is entry:
-                break
+            if table is None:
+                tables.append(df)
+            else:
+                if table == entry:
+                    tables.append(df)
+  
         return tables

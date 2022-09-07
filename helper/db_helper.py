@@ -1,4 +1,3 @@
-from operator import imod
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
 from config import constants
@@ -15,10 +14,11 @@ class DatabaseHelper:
 
     def __init__(self):
         root_path = util.get_path('data')
-        final_path = str(root_path.joinpath('data/' + constants.DB_NAME))
+        final_path = str(root_path + constants.DB_NAME)
         self.logger.info('Database Path: {0}'.format(final_path))
         self.connection = create_engine('sqlite:///' + final_path)
-        self.meta = MetaData(bind=self.connection, reflect=True)
+        self.meta = MetaData(bind=self.connection)
+        self.meta.reflect()
 
         self.create_session()
 
@@ -54,10 +54,10 @@ class DatabaseHelper:
     def fetch_entity_where(self, class_name, fetch_all=True, negated=False, **kwargs):
         self.logger.info('Fetching Enitity {0} from SQLite3'.format(class_name))
         try:
-            mod = __import__('src.python.helper.model', fromlist=[class_name])
+            mod = __import__('helper.model', fromlist=[class_name])
             entity_class = getattr(mod, class_name)
         except AttributeError:
-            mod = __import__('src.python.helper.init_db', fromlist=[class_name])
+            mod = __import__('helper.init_db', fromlist=[class_name])
             entity_class = getattr(mod, class_name)
         query = self.session.query(entity_class)
         if kwargs is not None:
@@ -79,9 +79,6 @@ class DatabaseHelper:
 
     def rollback(self):
         self.session.rollback()
-
-    def get_setting(self, setting_key):
-        return self.fetch_entity_where('SettingTable', key=setting_key, fetch_all=False)
 
     def clear_all(self):
         self.connection.execute('PRAGMA foreign_keys = OFF')
