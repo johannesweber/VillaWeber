@@ -82,6 +82,7 @@ class NavigationTable(Base):
     target = Column(String, nullable=False)
     mode = Column(String)
     order = Column(Integer)
+    hidden = Column(Boolean)
 
 
 class TemplateSettingTable(Base):
@@ -102,8 +103,8 @@ class MessageTable(Base):
     date = Column(DateTime, nullable=False)
 
 
-class StatisticsTable(Base):
-    __tablename__ = 'statisctics'
+class StatisticTable(Base):
+    __tablename__ = 'statistic'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     statistic_type = Column(Enum(StatisticsType), nullable = False)

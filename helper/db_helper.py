@@ -87,3 +87,11 @@ class DatabaseHelper:
             if name != 'setting':
                 self.connection.execute(table.delete())
         self.connection.execute('PRAGMA foreign_keys = ON')
+
+    def clear_table(self, table_name):
+        self.connection.execute('PRAGMA foreign_keys = OFF')
+        for table in self.meta.sorted_tables:
+            name = table.name
+            if name == table_name:
+                self.connection.execute(table.delete())
+        self.connection.execute('PRAGMA foreign_keys = ON')
