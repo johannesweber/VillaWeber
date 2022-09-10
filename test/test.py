@@ -1,4 +1,3 @@
-from tkinter.tix import DECREASING
 from helper.dashboard import Dashboard
 from helper.model import NavigationBar
 
@@ -12,5 +11,8 @@ def test_nav_bar():
 
 def test_dashboard():
     dashboard = Dashboard()
-    dashboard
+    dashboard.init_configuration()
+
+if __name__ == '__main__':
+    test_dashboard()
     
