@@ -41,7 +41,7 @@ class ComponentTable(Base):
     area = Column(String, nullable=False)
     room = Column(String, ForeignKey('room.name'), nullable=False)
     category = Column(String, nullable=False)
-    name = Column(String, nullable=False)
+    name = Column(String)
     is_favorite = Column(Boolean)
 
 class GroupAddressTable(Base):

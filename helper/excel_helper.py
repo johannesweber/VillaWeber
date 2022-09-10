@@ -9,10 +9,10 @@ class ExcelHelper:
         self.configuration = Configuration('villaweber')
         self.configuration.load()
         self.path = self.configuration.ga_excel_path
+        self.wb = load_workbook(self.path)
 
-    def read_excel(self, sheet_name, table = None) -> list[pd.DataFrame]:
-        wb = load_workbook(self.path)
-        sheet = wb[sheet_name]
+    def read_table(self, sheet_name, table=None) -> list[pd.DataFrame]:
+        sheet = self.wb[sheet_name]
         tables = []
 
         for entry, data_boundary in sheet.tables.items():

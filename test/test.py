@@ -1,4 +1,4 @@
-from helper.dashboard import Dashboard
+from helper.visualisation import Visualisation
 from helper.model import NavigationBar
 
 def test_nav_bar():
@@ -9,10 +9,10 @@ def test_nav_bar():
 
     print(items)
 
-def test_dashboard():
-    dashboard = Dashboard()
-    dashboard.init_configuration()
+def test_visu():
+    visu = Visualisation()
+    visu.init_configuration()
 
 if __name__ == '__main__':
-    test_dashboard()
+    test_visu()
     

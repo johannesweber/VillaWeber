@@ -42,7 +42,10 @@ class Component(ComponentTable):
 
     def __init__(self, area, room, category, name, is_favourite=False) -> None:
         super().__init__()
-        self.name = name
+        if name is None:
+            self.name = ''
+        else:
+            self.name = name
         self.area = area
         self.room = room
         self.category = category
@@ -66,12 +69,31 @@ class GroupAddress(GroupAddressTable):
         self.db_helper = DatabaseHelper()
 
         groups = address.split('/')
-        self.main_group = groups[0]
-        self.middle_group = groups[1]
-        self.under_group = groups[2]
+
+        try:
+            self.main_group = int(groups[0])
+        except:
+            self.main_group = None
+
+        try:
+            self.middle_group = int(groups[1])
+        except:
+            self.middle_group = None
+
+        try:
+            self.under_group = int(groups[2])
+        except:
+            self.under_group = None
 
     def add_to_db(self) -> int:
         return self.db_helper.add(self)
+
+    def has_under_group(self) -> bool:
+        if self.under_group is None:
+            return False
+        else:
+            return True
+
 
 class NavigationBar():
 
