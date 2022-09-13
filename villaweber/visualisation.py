@@ -69,11 +69,11 @@ class Visualisation():
                 else:
                     print('Could not add Group address ' + group_address_name)
 
-    def create_card_page(self):
+    def create_card_page_db(self):
         pass
 
 
-    def create_navigation_bar(self):
+    def create_navigation_bar_db(self):
         # read rooms from db and save as navigation item in db
         list = self.excel_helper.read_table('Einstellungen', 'room')
         rooms = list[0]
