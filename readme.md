@@ -10,10 +10,15 @@ xknxproject
 sqlalchemy
 
 # ToDo
-Read navigation items from database and create navigation bar dynamically with macros
-- https://uniwebsidad.com/libros/explore-flask/chapter-8/creating-macros
+CategoryTemplateTable Tabelle manuell befüllen (nur mit einem template)
+wie funktioniert navigation in flask?
+PageComponentTable automatisch befüllen -> filter auf room
+elementenn in template eine id geben
+TemplateSettingTable manuell befüllen
 
-Flask Packages and Folder Structure
+
+
+# Flask Packages and Folder Structure
 https://flask.palletsprojects.com/en/2.2.x/patterns/packages/
 
 # Run Command
