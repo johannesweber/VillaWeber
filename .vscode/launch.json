@@ -9,9 +9,9 @@
             "name": "Python: Flask",
             "type": "python",
             "request": "launch",
-            "module": "flask",
+            "module": "villaweber",
             "env": {
-                "FLASK_APP": "app.py",
+                "FLASK_APP": "villaweber.py",
                 "FLASK_ENV": "development"
             },
             "args": [

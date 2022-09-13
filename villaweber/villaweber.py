@@ -1,8 +1,6 @@
-from flask import Flask
+from villaweber import app
 from flask import render_template
 from helper.model import NavigationBar
-
-app = Flask(__name__)
 
 @app.route("/")
 def service():

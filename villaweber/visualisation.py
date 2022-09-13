@@ -1,20 +1,24 @@
 from helper.db_helper import DatabaseHelper
 from helper.excel_helper import ExcelHelper
 from helper.model import Component, GroupAddress, NavItem, Room
+from villaweber.helper.model import NavigationBar
 
 
 class Visualisation():
 
+    navigation_bar = None
+
     def __init__(self) -> None:
         self.excel_helper = ExcelHelper()
         self.db_helper = DatabaseHelper()
+        self.navigation_bar = NavigationBar()
 
     def init_configuration(self):
-        self.save_rooms()
-        self.save_components()
-        self.save_group_addresses()
+        self._save_rooms()
+        self._save_components()
+        self._save_group_addresses()
 
-    def save_rooms(self):
+    def _save_rooms(self):
         ## read rooms
         self.db_helper.clear_table('room')
 
@@ -31,7 +35,7 @@ class Visualisation():
             else:
                 print('Could not add room ' + room_name)
 
-    def save_components(self):
+    def _save_components(self):
         ## read and save components
         self.db_helper.clear_table('component')
 
@@ -48,7 +52,7 @@ class Visualisation():
                 print('Could not add component ' + component_name)
 
 
-    def save_group_addresses(self):
+    def _save_group_addresses(self):
         ## read and save group addresses
         self.db_helper.clear_table('group_address')
 
@@ -83,11 +87,11 @@ class Visualisation():
             room_id = room.add_to_db()
             if room_id:
                 print('Room ' + room_name + ' successfully added')
-                self.add_navigation_item(room_name)
+                self._save_navigation_item(room_name)
             else:
                 print('Could not add room ' + room_name)
             
-    def add_navigation_item(self, item_name) -> None:
+    def _save_navigation_item(self, item_name) -> None:
         nav_item = NavItem(text=item_name)
         nav_item_id = nav_item.add_to_db()
         if nav_item_id:
