@@ -22,4 +22,8 @@ TemplateSettingTable manuell befüllen
 https://flask.palletsprojects.com/en/2.2.x/patterns/packages/
 
 # Run Command
+.\.VillaWeber\Scripts\activate
+cd villaweber
 flask –app villaweber run
+
+PYTHONPATH = c:/Users/johan/OneDrive/Dokumente/GitHub/VillaWeber/villaweber

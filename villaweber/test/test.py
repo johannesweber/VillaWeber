@@ -1,5 +1,5 @@
-from helper.visualisation import Visualisation
 from helper.model import NavigationBar
+from visualisation import Visualisation
 
 def test_nav_bar():
     nav_bar = NavigationBar()
