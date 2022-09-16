@@ -10,11 +10,10 @@ xknxproject
 sqlalchemy
 
 # ToDo
-CategoryTemplateTable Tabelle manuell befüllen (nur mit einem template)
-wie funktioniert navigation in flask?
-PageComponentTable automatisch befüllen -> filter auf room
-elementenn in template eine id geben
+methode _save_page_components_db in visualitaion.py
+elementen in template eine id geben, oder dynamiscghe variable: wahrshcienlich HTML mit Mockup erstellen dann an redner_tempalte übergeben
 TemplateSettingTable manuell befüllen
+read page content from db
 
 
 

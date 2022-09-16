@@ -1,22 +1,43 @@
 from helper.db_helper import DatabaseHelper
 from helper.excel_helper import ExcelHelper
-from helper.model import Component, GroupAddress, NavItem, Room
-from villaweber.helper.model import NavigationBar
+from villaweber.model.navigation import NavigationBar, NavItem
+from villaweber.model.database import Component, Room, GroupAddress, CategoryTemplate
+from villaweber.model.page import Page
 
 
 class Visualisation():
 
     navigation_bar = None
+    pages = None
 
     def __init__(self) -> None:
         self.excel_helper = ExcelHelper()
         self.db_helper = DatabaseHelper()
         self.navigation_bar = NavigationBar()
+        self.pages = {} #dictionary with 'page_name': 'Page Object'
 
-    def init_configuration(self):
+    def init_configuration(self) -> None:
+        # read and save excel file
         self._save_rooms()
         self._save_components()
         self._save_group_addresses()
+
+        #populate db with default entries
+        self._save_navigation_bar_db()
+        self._save_templates_db()
+        self._save_page_components_db()
+
+    def get_page(self, page_name) -> Page:
+        return self.pages[page_name]
+
+    def get_pages(self) -> list:
+        return self.pages
+
+    def get_navigation_bar(self) -> NavigationBar:
+        return self.navigation_bar
+
+    def build() -> None:
+        pass # Build up the whole visualisation
 
     def _save_rooms(self):
         ## read rooms
@@ -44,8 +65,8 @@ class Visualisation():
 
         for index, row in components.iterrows():
             component_name = row['Name']
-            component = Component(name=component_name, area=row['Bereich'], room=row['Raum'], category=row['Kategorie'])
-            comp_id = component.add_to_db()
+            component = Component()
+            comp_id = component.create(name=component_name, area=row['Bereich'], room=row['Raum'], category=row['Kategorie'])
             if comp_id:
                 print('Component {0} successfully added'.format(component_name))
             else:
@@ -69,11 +90,17 @@ class Visualisation():
                 else:
                     print('Could not add Group address ' + group_address_name)
 
-    def create_card_page_db(self):
+    def _save_templates_db(self):
+        category_template = CategoryTemplate()
+        category_template.create(category = 'Licht', template = 'light')
+
+    def _save_page_components_db(self):
+        # read navigation items
+        # read components with room filter (=navigation item name)
+        # populate PageComponentTable (page=navigation target, component_id = compoenent.id)
         pass
 
-
-    def create_navigation_bar_db(self):
+    def _save_navigation_bar_db(self):
         # read rooms from db and save as navigation item in db
         list = self.excel_helper.read_table('Einstellungen', 'room')
         rooms = list[0]

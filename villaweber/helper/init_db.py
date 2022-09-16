@@ -69,7 +69,7 @@ class PageComponentTable(Base):
     __tablename__ = 'page_component'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    html_file = Column(String, nullable=False)
+    page = Column(String, ForeignKey('navigation.target'), nullable=False)
     component_id = Column(Integer, ForeignKey('component.id'), nullable=False)
     order = Column(Integer)
 
@@ -80,13 +80,14 @@ class NavigationTable(Base):
     text = Column(String, nullable=False)
     icon = Column(String, nullable=False)
     target = Column(String, nullable=False)
+    html_file = Column(String, nullable=False)
     mode = Column(String)
     order = Column(Integer)
     hidden = Column(Boolean)
 
 
 class TemplateSettingTable(Base):
-    __tablename__ = 'template_setting'
+    __tablename__ = 'templatefunction'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     template = Column(String, nullable=False)
