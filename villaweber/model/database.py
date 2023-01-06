@@ -1,5 +1,5 @@
 from helper.db_helper import DatabaseHelper
-from helper.init_db import RoomTable, ComponentTable, GroupAddressTable, CategoryTemplateTable, PageComponentTable
+from helper.init_db import RoomTable, ComponentTable, GroupAddressTable, CategoryTemplateTable, PageComponentTable, NavigationTable
 
 class PageComponent(PageComponentTable):
 
@@ -32,6 +32,12 @@ class CategoryTemplate(CategoryTemplateTable):
 class Component(ComponentTable):
 
     db_helper = None
+
+    name = None
+    area = None
+    room = None
+    category = None
+    is_favorite = None
 
     def __init__(self) -> None:
         super().__init__()
@@ -102,6 +108,22 @@ class Room(RoomTable):
         self.min = min
         self.max = max
         self.db_helper = DatabaseHelper()
+
+    def add_to_db(self) -> int:
+        return self.db_helper.add(self)
+
+class NavItem(NavigationTable):
+
+    db_helper = DatabaseHelper()
+
+    def __init__(self, text, target, html_file=None, mode=None, icon='home', order='99', hidden=False) -> None:
+        self.icon = icon
+        self.text = text
+        self.target = target
+        self.html_file = html_file
+        self.mode = mode
+        self.order = order
+        self.hidden = hidden
 
     def add_to_db(self) -> int:
         return self.db_helper.add(self)

@@ -2,18 +2,18 @@ from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
 from config import constants
 from helper import util
-
-import logging
+from helper.log import Logger
 
 
 class DatabaseHelper:
-    logger = logging.getLogger(__name__)
+
     connection = None
     session = None
     meta = None
 
     def __init__(self):
         root_path = util.get_path('data')
+        self.logger = Logger().get_logger(logger_name=__name__)
         final_path = str(root_path + constants.DB_NAME)
         self.logger.info('Database Path: {0}'.format(final_path))
         self.connection = create_engine('sqlite:///' + final_path)
@@ -51,10 +51,10 @@ class DatabaseHelper:
         self.session.add_all(entries)
         self.commit()
 
-    def fetch_entity_where(self, class_name, fetch_all=True, negated=False, **kwargs):
+    def fetch_entity_where(self, class_name, fetch_all=True, negated=False, order_by=[], **kwargs):
         self.logger.info('Fetching Enitity {0} from SQLite3'.format(class_name))
         try:
-            mod = __import__('helper.model', fromlist=[class_name])
+            mod = __import__('model.database', fromlist=[class_name])
             entity_class = getattr(mod, class_name)
         except AttributeError:
             mod = __import__('helper.init_db', fromlist=[class_name])
@@ -67,6 +67,10 @@ class DatabaseHelper:
                     query = query.filter(attribute != value)
                 else:
                     query = query.filter(attribute == value)
+
+        if order_by:
+            for value in order_by:
+                query = query.order_by(value)
 
         if fetch_all:
             result = query.all()

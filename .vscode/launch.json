@@ -4,15 +4,14 @@
     // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
             "name": "Python: Flask",
             "type": "python",
             "request": "launch",
-            "module": "villaweber",
+            "module": "flask",
             "env": {
-                "FLASK_APP": "villaweber.py",
-                "FLASK_ENV": "development"
+                "FLASK_APP": "villaweber.webapp",
+                "FLASK_DEBUG": "true"
             },
             "args": [
                 "run"

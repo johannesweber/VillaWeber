@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="alert alert-danger" role="alert">
+    <span>
+        <strong>
+            Statuscode: {{ group.http_code }} - {{ group.message }}
+        </strong>
+        {{ group.description }}
+    </span>
+</div>
+{% endblock %}
+

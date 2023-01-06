@@ -6,12 +6,12 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 
-def init_logger(default_level: str = logging.ERROR):
+def init_logger(default_level: str = logging.DEBUG):
     logging_file_path = get_path('config') + 'logging.json'
-    setup_logging(path=logging_file_path, default_level=default_level)
+    _setup_logging(path=logging_file_path, default_level=default_level)
 
 
-def setup_logging(path, default_level, env_key='LOG_CFG'):
+def _setup_logging(path, default_level, env_key='LOG_CFG'):
     """Setup logging configuration"""
     value = os.getenv(env_key, None)
     if value:
@@ -20,7 +20,7 @@ def setup_logging(path, default_level, env_key='LOG_CFG'):
     if os.path.exists(path):
         with open(path, 'rt') as f:
             config = json.load(f)
-        logging.config.dictConfig(config)
+            logging.config.dictConfig(config)
     else:
         logger.info('Not found! Using basic logging configuration...')
         logging.basicConfig(level=default_level)
@@ -51,3 +51,8 @@ def string_2_bool(string_2_convert):
         if string_2_convert.lower() == 'true':
             result = True
     return result
+
+
+def replace_umlaute(text):
+    special_char_map = {ord('ä'):'ae', ord('ü'):'ue', ord('ö'):'oe', ord('ß'):'ss'}
+    return text.translate(special_char_map)

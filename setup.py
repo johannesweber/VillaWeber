@@ -9,6 +9,7 @@ setup(
         'openpyxl',
         'pandas',
         'xknx',
-        'sqlalchemy'
+        'sqlalchemy',
+        'fritzconnection'
     ],
 )

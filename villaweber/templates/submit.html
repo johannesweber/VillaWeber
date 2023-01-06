@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block fetch %}
+  <script src="https://unpkg.com/promise-polyfill@7.1.2/dist/polyfill.min.js"></script>
+  <script src="https://unpkg.com/whatwg-fetch@2.0.4/fetch.js"></script>
+  <script>
+    function submitFormData(ev) {
+      ev.preventDefault();
+      fetch("{{ url_for('villaweber/submit')|tojson }}", {
+        method: 'PUT',
+        body: new FormData(this)
+      })
+        .then(parseJSON)
+    }
+
+    function parseJSON(response) {
+      return response.json();
+    }
+
+    var elements = document.querySelectorAll("input.submit, button.submit")
+    for (let i = 0; elements.length; i++){
+      var element = elements[i];
+      element.addEventListener('submit', submitFormData);
+    }
+  </script>
+{% endblock %}

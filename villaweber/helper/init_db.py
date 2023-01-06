@@ -19,6 +19,7 @@ class StatisticsType(enum.Enum):
     SCENES = 6
     SOCKET = 7
 
+
 class Unit(enum.Enum):
     KMH = 1
     CELSIUS = 2
@@ -44,6 +45,7 @@ class ComponentTable(Base):
     name = Column(String)
     is_favorite = Column(Boolean)
 
+
 class GroupAddressTable(Base):
     __tablename__ = 'group_address'
 
@@ -65,6 +67,14 @@ class CategoryTemplateTable(Base):
     template = Column(String, nullable=False)
 
 
+class ElementNameMappingTable(Base):
+    __tablename__ = 'element_name_mapping'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    element_name = Column(String, nullable=False)
+    ga_name_substring = Column(String, nullable=False)
+
+
 class PageComponentTable(Base):
     __tablename__ = 'page_component'
 
@@ -73,6 +83,7 @@ class PageComponentTable(Base):
     component_id = Column(Integer, ForeignKey('component.id'), nullable=False)
     order = Column(Integer)
 
+
 class NavigationTable(Base):
     __tablename__ = 'navigation'
 
@@ -80,20 +91,10 @@ class NavigationTable(Base):
     text = Column(String, nullable=False)
     icon = Column(String, nullable=False)
     target = Column(String, nullable=False)
-    html_file = Column(String, nullable=False)
+    html_file = Column(String)
     mode = Column(String)
     order = Column(Integer)
     hidden = Column(Boolean)
-
-
-class TemplateSettingTable(Base):
-    __tablename__ = 'templatefunction'
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    template = Column(String, nullable=False)
-    element_id = Column(String, nullable=False)
-    ga_description = Column(String, nullable=False)
-    ga_function = Column(String, nullable=False)
 
 
 class MessageTable(Base):
